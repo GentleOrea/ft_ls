@@ -1,0 +1,7 @@
+option a gere:
+-n uid et gid
+-G no group
+-C colonne
+le print des couleurs ?
+gestion des ACL
+
