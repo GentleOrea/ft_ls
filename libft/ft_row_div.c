@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_input.c                                      :+:      :+:    :+:   */
+/*   ft_row_div.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/17 14:31:34 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/19 15:09:49 by ygarrot          ###   ########.fr       */
+/*   Created: 2018/03/19 15:39:39 by ygarrot           #+#    #+#             */
+/*   Updated: 2018/03/19 16:46:19 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 
-void	parse_input(int ac, char **av)
+int		ft_row_div(int nb, int div)
 {
-	int		i;
-	int		i2;
-	int		op;
+	int i;
 
-	i = 1;
-	op = 0;
-	while (i < ac && av[i][0] == '-')
+	i = 0;
+	while (nb / div > 0)
 	{
-		i2 = 0;
-		while (ft_isin(av[i][++i2], LS_FLAGS))
-			op |= 1 << charchr(av[i][i2], LS_FLAGS);
-		if (av[i++][i2])
-		{
-			ft_printf("Usage : ls [CGRalrt] [file ...]\n");
-			return ;
-		}
+		nb /= div;
+		i++;
 	}
-	if (i == ac )
-		recc(".", op);
-	while (i < ac)
-		recc(av[i++], op);
-//	ft_printf("%d\n", op);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:33:13 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/17 15:12:35 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/19 16:12:27 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		initlist(t_arg *list)
 	list->bg = -1;
 	list->champ = 0;
 	list->pre = -1;
+	list->wild = 0;
 	return (1);
 }
 
@@ -43,9 +44,13 @@ int		get_fields(const char *str, int i, t_arg *tempm, int index)
 {
 	while (charchr(str[i], NBR) >= 0)
 	{
-		if (tempm->pre && str[i] == '.' && i++)
+		if (str[i] == '*' && i++)
+			tempm->wild |= 1;
+		else if (tempm->pre && str[i] == '.' && i++)
 		{
 			tempm->pre = 0;
+			if (str[i] == '*' && i++)
+				tempm->wild |= 2;
 			while (charchr(str[i], NBR) >= 0)
 				tempm->pre = (tempm->pre * 10) + str[i++] - '0';
 		}

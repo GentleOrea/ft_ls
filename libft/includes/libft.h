@@ -6,14 +6,14 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 15:23:29 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/17 13:25:13 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/19 16:04:47 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # define FLAGS "+0- #"
-# define NBR "0132456789."
+# define NBR "0132456789.*"
 # define SPECIFIER "hljz"
 # define CONVERT "uoxUOXpdDicCsS"
 # define BUFF_SIZE 32
@@ -151,6 +151,7 @@ typedef struct	s_arg
 	int		champ;
 	int		pre;
 	int		length;
+	char	wild;
 	int		padding;
 }				t_arg;
 
@@ -183,5 +184,5 @@ int				initlist(t_arg *list);
 int				charchr(char c, char *str);
 int				ft_occur_in(char *str, char c);
 
-int				get_next_line_lst(int fd, char **line);
+int				ft_row_div(int nb, int base);
 #endif

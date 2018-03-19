@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/10 11:07:21 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/01/17 18:38:07 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/19 16:14:07 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int		*putf(va_list va, t_arg *list, const char *str, int *i)
 	if (str[0] == '%')
 	{
 		i[0] = parse_arg(str, list);
+		(list->wild & 1) ? list->champ = va_arg(va, unsigned int) : 0;
+		(list->wild & 2) ? list->pre = va_arg(va, unsigned int) : 0;
 		if (i[0])
 			print1(chooseconv(va, list), list);
 	}

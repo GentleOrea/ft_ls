@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/13 14:29:56 by ygarrot           #+#    #+#              #
-#    Updated: 2018/03/12 10:25:10 by ygarrot          ###   ########.fr        #
+#    Updated: 2018/03/19 15:41:31 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC = 	ft_lstadd.c ft_memdel.c ft_strcat.c \
 		ft_str_isdigit.c ft_initdbl_int_tab.c ft_print_dbl_inttab.c\
 		ft_putnbr_recc.c ft_search_char.c chooseconv.c convuimax.c convs.c\
 		ft_printf.c parser_printf.c parsecolor.c printp.c print_nchar.c\
-		ft_occur_in.c
+		ft_occur_in.c ft_row_div.c
 
 OBJ = $(SRC:.c=.o)
 
