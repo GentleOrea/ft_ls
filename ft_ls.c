@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 17:18:39 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/20 10:04:04 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 18:46:47 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 	t_ls	*to_del;
 	char	link[256];
 
+	ft_bzero(link, sizeof(link));
 	tmp = begin;
 	(op & 1) ? ft_printf("total %d\n", g->nb_block) : 0;
 	while (tmp && tmp->name)
@@ -38,7 +39,9 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 		if ((op & 2) && tmp->type == 4 && ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
 		{
 			ft_printf("\n");
-			recc(ft_strjoin(str, tmp->name), op);
+			op & 2 ? ft_printf("%s:\n", tmp->path = ft_strjoin(str, tmp->name)) : 0;
+			(void)str;
+			recc(tmp->path, op, tmp);
 		}
 		to_del = tmp;
 		tmp = tmp->next;
@@ -53,19 +56,20 @@ int		get_terms(t_ls *begin, t_ls *to_add, int op)
 	if (op & 2048 && !(op & 8))
 		return (to_add->stat.st_atime > begin->stat.st_atime);
 	else if (op & 2048)
-		return (to_add->stat.st_atime < begin->stat.st_atime);
+		return (to_add->stat.st_atime <= begin->stat.st_atime);
 	else if (op & 16 && !(op & 8))
 		return (to_add->stat.st_mtime > begin->stat.st_mtime);
-	else if (op & 16)
-		return (to_add->stat.st_mtime < begin->stat.st_mtime);
+	else if (op & 16){// ft_printf("%s->%d < %s->%d{green}%d{reset}\n",to_add->name, to_add->stat.st_mtime,begin->name,
+		//	begin->stat.st_mtime, to_add->stat.st_mtime < begin->stat.st_mtime);
+		return (to_add->stat.st_mtime <= begin->stat.st_mtime);}
 	else if (op & 512 && !(op & 8))
 		return (to_add->stat.st_size > begin->stat.st_size);
 	else if (op & 512)
-		return (to_add->stat.st_size < begin->stat.st_size);
+		return (to_add->stat.st_size <= begin->stat.st_size);
 	else if (op & 1024 && !(op & 8))
 		return (to_add->stat.st_ctime > begin->stat.st_ctime);
 	else if (op & 1024)
-		return (to_add->stat.st_ctime < begin->stat.st_ctime);
+		return (to_add->stat.st_ctime <= begin->stat.st_ctime);
 	else if (!(op & 8))
 		return (ft_strcmp(begin->name, to_add->name) > 0);
 	return (ft_strcmp(begin->name, to_add->name) < 0);
@@ -73,6 +77,7 @@ int		get_terms(t_ls *begin, t_ls *to_add, int op)
 
 t_ls	*true_sort(t_ls *begin, t_ls *to_add, int op)
 {
+	//print_list(begin);
 	if (get_terms(begin, to_add, op))
 	{
 		to_add->next = begin;
@@ -87,6 +92,8 @@ t_ls	*true_sort(t_ls *begin, t_ls *to_add, int op)
 	}
 	while (begin->next && !get_terms(begin->next, to_add, op))
 		begin = begin->next;
+	//if (begin->next)
+	//	ft_printf("{magenta}%s / %s{reset}\n", begin->next->name, to_add->name);
 	if (!begin->next)
 	{
 		begin->next = to_add;
@@ -119,20 +126,23 @@ t_ls	*sort_files2(t_global *g, t_ls *begin, char *str, int op)
 	return (begin);
 }
 
-void	recc(char *str, int op)
+void	recc(char *str, int op, t_ls *actual)
 {
 	t_ls	*begin;
 	t_global	*g;
 	
 	mallcheck(g = (t_global*)ft_memalloc(sizeof(t_global)));
 	g->dire = opendir(str);
+	op & 0x80000000 ? ft_printf(g->dire ? "%s:\n" : "%s", str) : 0;
 	if (!g->dire)
 	{
-		perror(str);
+		char *temp = ft_strjoin("ls: ", actual ? actual->name : str);
+		!(op & 0x80000000) ? perror(temp) : 0;
+		//ft_memdel((void**)&str);
 		return ;
 	}
+	op &= 0x7FFFFFFF;
 	mallcheck(begin = (t_ls*)ft_memalloc(sizeof(t_ls)));
-	op & 2 ? ft_printf("%s:\n", str) : 0;
 	str = ft_strjoin(str, "/");
 	begin = sort_files2(g, begin, str, op);
 	sort_files(g, begin, str, op);

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 14:21:23 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/01/19 18:33:35 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 18:22:01 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_itoabase(int nbr, int base)
 	result = value;
 	while (result /= base)
 		i++;
-	if (!(str = (char*)malloc((i + 1) * sizeof(char))))
+	if (!(str = (char*)malloc((i + 2) * sizeof(char))))
 		return (NULL);
 	str[i + 1] = '\0';
 	while (value > 0)

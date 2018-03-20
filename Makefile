@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 11:17:30 by ygarrot           #+#    #+#              #
-#    Updated: 2018/03/19 18:33:01 by ygarrot          ###   ########.fr        #
+#    Updated: 2018/03/20 13:52:58 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_FP = ft_ls.c \
 		list.c \
 		debug.c \
 		get_stat.c
+
 #Colors
 _RED=\x1b[31m
 _GREEN=\x1b[32m
