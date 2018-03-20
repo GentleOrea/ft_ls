@@ -6,13 +6,13 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 14:31:34 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/19 15:09:49 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 09:37:58 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	parse_input(int ac, char **av)
+int		parse_input(int ac, char **av)
 {
 	int		i;
 	int		i2;
@@ -28,7 +28,7 @@ void	parse_input(int ac, char **av)
 		if (av[i++][i2])
 		{
 			ft_printf("Usage : ls [CGRalrt] [file ...]\n");
-			return ;
+			return (1) ;
 		}
 	}
 	if (i == ac )
@@ -36,4 +36,5 @@ void	parse_input(int ac, char **av)
 	while (i < ac)
 		recc(av[i++], op);
 //	ft_printf("%d\n", op);
+	return (0);
 }

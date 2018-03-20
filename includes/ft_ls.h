@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:14:03 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/19 18:28:43 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 09:37:32 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	dmaill(t_ls *maillon);
 void	print_list(t_ls *tmp);
 void	pop_list(t_ls *file);
 void	swap_files(t_ls *file1, t_ls *file2);
-void	parse_input(int ac, char **av);
+int		parse_input(int ac, char **av);
 void	mallcheck(void *crap);
 void	recc(char *str, int op);
 void	get_stat(t_global*g, t_ls *list, char *argv);

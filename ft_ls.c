@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 17:18:39 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/19 18:19:20 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 10:04:04 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 		{
 			(op & 1) ? print_stat(g, tmp) : 0;
 			ft_printf("%s", tmp->name);
-			readlink(tmp->path, link, 256) > 0 && (op & 1)? ft_printf(" -> %s", link) : 0;
+			readlink(tmp->path, link, 255) > 0 && (op & 1)? ft_printf(" -> %s", link) : 0;
 			ft_printf("\n");
 		}
 		tmp = tmp->next;
@@ -36,7 +36,10 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 	while (tmp)
 	{
 		if ((op & 2) && tmp->type == 4 && ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, ".."))
+		{
+			ft_printf("\n");
 			recc(ft_strjoin(str, tmp->name), op);
+		}
 		to_del = tmp;
 		tmp = tmp->next;
 		ft_memdel((void**)&to_del->name);
@@ -63,7 +66,7 @@ int		get_terms(t_ls *begin, t_ls *to_add, int op)
 		return (to_add->stat.st_ctime > begin->stat.st_ctime);
 	else if (op & 1024)
 		return (to_add->stat.st_ctime < begin->stat.st_ctime);
-	else if (!(op & 8)) //ft_printf("{red}%d\n{reset}", ft_strcmp(begin->name, to_add->name));
+	else if (!(op & 8))
 		return (ft_strcmp(begin->name, to_add->name) > 0);
 	return (ft_strcmp(begin->name, to_add->name) < 0);
 }
@@ -129,7 +132,7 @@ void	recc(char *str, int op)
 		return ;
 	}
 	mallcheck(begin = (t_ls*)ft_memalloc(sizeof(t_ls)));
-	op & 2 ? ft_printf("\n%s:\n", str) : 0;
+	op & 2 ? ft_printf("%s:\n", str) : 0;
 	str = ft_strjoin(str, "/");
 	begin = sort_files2(g, begin, str, op);
 	sort_files(g, begin, str, op);
@@ -140,6 +143,5 @@ void	recc(char *str, int op)
 
 int		main(int ac, char **av)
 {
-	parse_input(ac,av);
-	return 0;
+	return (parse_input(ac,av));
 }

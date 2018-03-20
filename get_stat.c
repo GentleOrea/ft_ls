@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 09:48:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/19 18:36:25 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/20 09:59:14 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	convert_mode(mode_t st_mode)
 
 void	get_stat(t_global *g, t_ls *list, char *argv)
 {
-	//	ft_printf("%s\n", argv);
-	if (stat(argv, &list->stat) == -1) 
+	//	ft_printf("{red}%s\n{reset}", argv);
+	if (lstat(argv, &list->stat) == -1) 
 	{
 		perror("stat");
 		return ;
@@ -60,7 +60,7 @@ void	get_stat(t_global *g, t_ls *list, char *argv)
 	g->s_len = ft_ismax(g->s_len, 1 + ft_row_div(list->stat.st_size, 10));
 	list->uid = getpwuid(list->stat.st_uid)->pw_name;
 	list->gid = getgrgid(list->stat.st_gid)->gr_name;
-	g->u_len = ft_ismax(g->u_len, ft_strlen(list->uid));
+	g->u_len = ft_ismax(g->u_len, 1 + ft_strlen(list->uid));
 	g->g_len = ft_ismax(g->g_len, ft_strlen(list->gid));
 	g->nb_block += list->stat.st_blocks;
 	if (list->name)
@@ -76,8 +76,8 @@ void	print_stat(t_global *g, t_ls *list)
 	char	link[256];
 	
 	ft_bzero(link, sizeof(link));
-	int i;
-	(i = readlink(list->path, link, 256)) > 0 ? lstat(link, &list->stat) : 0;
+//	int i;
+	//(i = readlink(list->path, link, 255)) > 0 ? lstat(link, &list->stat) : 0;
 	convert_mode(list->stat.st_mode);
 	ft_printf("%*u ", g->l_len, (unsigned long)list->stat.st_nlink);
 	//printf("Propriétaires :                    UID=%ld   GID=%ld\n",
