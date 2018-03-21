@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 11:17:30 by ygarrot           #+#    #+#              #
-#    Updated: 2018/03/20 13:52:58 by ygarrot          ###   ########.fr        #
+#    Updated: 2018/03/21 17:11:39 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRC_FOLDER = ./
 SRC_FP = ft_ls.c \
 		error.c \
 		parse_input.c \
-		list.c \
 		debug.c \
 		get_stat.c
 

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:14:03 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/20 18:31:28 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/21 18:32:33 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 typedef struct	s_global
 {
+	char			b;
+	char	m;
 	int		op;
 	char	m_files;
 	int		s_len;
@@ -41,18 +43,22 @@ typedef struct	s_global
 
 typedef struct s_ls
 {
-	char		type;
-	char		*path;
-	char		*name;
-	char		*uid;
-	char		*gid;
+	char			b;
+	char			type;
+	char			*path;
+	char			*name_f;
+	char			*name;
+	char			*uid;
+	char			*gid;
 	unsigned int	maj;
-	int			min;
+	int				min;
 	struct stat stat;
 	struct s_ls *next;
 	struct s_ls *prev;
 }				t_ls;
 
+void	sort_files(t_global *g, t_ls *begin, char *str, int op);
+t_ls	*true_sort(t_ls *begin, t_ls *to_add, int op);
 void	dmaill(t_ls *maillon);
 void	print_list(t_ls *tmp);
 void	pop_list(t_ls *file);
@@ -60,6 +66,8 @@ void	swap_files(t_ls *file1, t_ls *file2);
 int		parse_input(int ac, char **av);
 void	mallcheck(void *crap);
 void	recc(char *str, int op, t_ls *list);
-void	get_stat(t_global*g, t_ls *list, char *argv);
+void	get_stat(t_global*g, t_ls *list);
 void	print_stat(t_global *g, t_ls *list);
+void	ls_error(char *str);
+int		path_is_valid(t_global *g, char *path, struct stat *stat);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 09:48:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/20 19:06:28 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/21 18:33:25 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,25 @@ void	convert_mode(mode_t st_mode, t_ls *list)
 	ft_printf("%s ", s);
 }
 
-void	get_stat(t_global *g, t_ls *list, char *argv)
+int		path_is_valid(t_global *g, char *path, struct stat *stat)
 {
-	//	ft_printf("{red}%s\n{reset}", argv);
-	if (lstat(argv, &list->stat) == -1) 
+	(void)g;
+	if (-1 == lstat(path, stat))
 	{
-		perror("stat");
-		return ;
+		ls_error(path);
+		return (0);
 	}
-	//if (list->name)
+	return (1);
+}
+void		get_stat(t_global *g, t_ls *list)
+{
+	//if (list->name && !g->b)
 	//	return ;
-	list->type = g->dir->d_type;
-	list->name = ft_strdup(g->dir->d_name);
-	
+	if (!g->b)
+	{
+		list->type = g->dir->d_type;
+		list->name = ft_strdup(g->dir->d_name);
+	}
 	g->l_len = ft_ismax(g->l_len, 1 + ft_row_div(list->stat.st_nlink, 10));
 	if (list->type != DT_CHR)
 		g->s_len = ft_ismax(g->s_len, 1 + ft_row_div(list->stat.st_size, 10));
@@ -96,7 +102,7 @@ void	print_stat(t_global *g, t_ls *list)
 	//		(long) list->stat.st_uid, (long) list->stat.st_gid);
 	ft_printf("%-*s %-*s ", g->u_len, list->uid, g->g_len, list->gid);
 	list->type != DT_CHR ? ft_printf(" %*u ", g->s_len, (unsigned long)list->stat.st_size)
-	 : ft_printf(" %*d, %*d ", g->maj_len,list->maj,g->min_len, list->min);
+		: ft_printf(" %*d, %*d ", g->maj_len,list->maj,g->min_len, list->min);
 	//printf("Dernier changement d’état :        %s", ctime(&list->stat.st_ctime));
 	//printf("Dernier accès au fichier :         %s", ctime(&list->stat.st_atime));
 	tab = ft_strsplit(ctime(&list->stat.st_mtime), ' ');
