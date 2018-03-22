@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:14:03 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/21 18:32:33 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/22 15:42:55 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 #include <sys/acl.h>
 #include <sys/xattr.h>
 #include <sys/ioctl.h>
-# define LS_FLAGS "lRartACFGScu1imn"
-//# define LS_FLAGS "FlGCRacirtu1"
+# define LS_FLAGS "lRartACFGScu1imnUf"
 
 typedef struct	s_global
 {
@@ -66,8 +65,9 @@ void	swap_files(t_ls *file1, t_ls *file2);
 int		parse_input(int ac, char **av);
 void	mallcheck(void *crap);
 void	recc(char *str, int op, t_ls *list);
-void	get_stat(t_global*g, t_ls *list);
-void	print_stat(t_global *g, t_ls *list);
+void	get_stat(t_global*g, t_ls *list, int op);
+void	print_stat(t_global *g, t_ls *list, int op);
 void	ls_error(char *str);
-int		path_is_valid(t_global *g, char *path, struct stat *stat);
+t_ls	*path_is_valid(t_global *g, char *path, char *name, int op);
+void	convert_mode(mode_t st_mode, t_ls *list);
 #endif

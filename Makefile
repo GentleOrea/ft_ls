@@ -6,7 +6,7 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 11:17:30 by ygarrot           #+#    #+#              #
-#    Updated: 2018/03/21 17:11:39 by ygarrot          ###   ########.fr        #
+#    Updated: 2018/03/22 15:43:20 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ SRC_FP = ft_ls.c \
 		error.c \
 		parse_input.c \
 		debug.c \
-		get_stat.c
-
+		get_stat.c \
+		special.c \
+		sort.c 
 #Colors
 _RED=\x1b[31m
 _GREEN=\x1b[32m
