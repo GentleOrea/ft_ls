@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 17:18:39 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/21 18:03:20 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/22 11:53:00 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,12 @@ t_ls	*sort_files2(t_global *g, t_ls *begin, char *str, int op)
 	char		*path;
 	struct stat	temp;
 
-	while ((g->dir = readdir(g->dire)) && !begin->path)
-		path_is_valid(g, begin->path = ft_strjoin(str, g->dir->d_name), &temp);
+	while (!begin->path && (g->dir = readdir(g->dire)))
+	{
+		if (!(!(op & 4) && g->dir->d_name[0] == '.'))
+			path_is_valid(g, begin->path = ft_strjoin(str, g->dir->d_name), &temp);
+	}
+	begin->stat = temp;
 	get_stat(g, begin);
 	while ((g->dir = readdir(g->dire)))
 	{
@@ -148,9 +152,8 @@ void	recc(char *str, int op, t_ls *actual)
 	g->dire = opendir(str);
 	if (!g->dire)
 	{
-		char *temp = ft_strjoin("ls: ", actual ? actual->name : str);
-		(void)temp;
-		perror(temp);
+		ft_printf("ls: ");
+		perror( actual ? actual->name : str);
 		//ft_memdel((void**)&str);
 		return ;
 	}
