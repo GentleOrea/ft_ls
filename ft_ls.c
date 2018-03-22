@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 17:18:39 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/22 15:44:55 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/22 18:29:51 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 	(op & 1) && !g->b ? ft_printf("total %d\n", g->nb_block) : 0;
 	while (tmp && tmp->name)
 	{
-		if ((!g->b && !(!(op & 4) && tmp->name[0] == '.'))
-				|| (g->b && (tmp->stat.st_mode & S_IFMT) != S_IFDIR))
+		if ((((((op & 0x8000) && ft_strcmp(tmp->name, ".") && ft_strcmp(tmp->name, "..")) || !(op & 0x8000)) &&
+					!g->b && !(!(op & 4) && tmp->name[0] == '.'))
+				|| (g->b && (tmp->stat.st_mode & S_IFMT) != S_IFDIR)))
 		{
 			(op & 1) ? print_stat(g, tmp, op) : 0;
 			ft_printf("%s", tmp->name);

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:14:03 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/22 15:42:55 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/22 19:40:35 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <sys/acl.h>
 #include <sys/xattr.h>
 #include <sys/ioctl.h>
-# define LS_FLAGS "lRartACFGScu1imnUf"
+# define LS_FLAGS "lRart1oScunUfgiAG"
 
 typedef struct	s_global
 {

@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 09:48:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/22 15:42:24 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/22 19:57:11 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void		get_stat(t_global *g, t_ls *list, int op)
 	}
 	list->uid = getpwuid(list->stat.st_uid)->pw_name;
 	list->gid = getgrgid(list->stat.st_gid)->gr_name;
-	g->u_len = ft_ismax(g->u_len, 1 + ((op & 32768) ? ft_row_div(list->stat.st_uid, 10) : ft_strlen(list->uid)));
-	g->g_len = ft_ismax(g->g_len, 1 + ((op & 32768) ? ft_row_div(list->stat.st_uid, 10) : ft_strlen(list->gid)));
+	g->u_len = ft_ismax(g->u_len, 1 + ((op & 0x400) ? ft_row_div(list->stat.st_uid, 10) : ft_strlen(list->uid)));
+	g->g_len = ft_ismax(g->g_len, 1 + ((op & 0x400) ? ft_row_div(list->stat.st_uid, 10) : ft_strlen(list->gid)));
 	g->nb_block += list->stat.st_blocks;
 }
 
@@ -64,31 +64,32 @@ void		get_stat(t_global *g, t_ls *list, int op)
 void	print_stat(t_global *g, t_ls *list, int op)
 {
 	char	**tab;
+	time_t	tme2;
 	int		tme;
 
 	tab = NULL;
-	if ((tme = time(NULL) - list->stat.st_mtime) > 15778800  || tme < 0)
-	{
-		//ft_printf("{red}%d{reset}\n", tme);
+	tme2 = list->stat.st_mtime;
+	(op & 0x100) ? tme2 =  list->stat.st_ctime : 0;
+	(op & 0x200) ? tme2 =  list->stat.st_atime : 0;
+	(op & 0x800) ? tme2 =  list->stat.st_birthtime : 0;
+	if ((tme = time(NULL) - tme2) > 15778800  || tme < 0)
 		tme = 1;
-	}
 	else
 		tme = 0;
-	//ft_printf("{red}%d, %d{reset}\n", g->s_len, g->g_len);
 	convert_mode(list->stat.st_mode, list);
 	ft_printf("%*u ", g->l_len, (unsigned long)list->stat.st_nlink);
-	op & 32768 ? ft_printf("%-*d %-*d", g->u_len, list->stat.st_uid, g->g_len, list->stat.st_gid) :
-	ft_printf("%-*s %-*s ", g->u_len, list->uid, g->g_len, list->gid);
+	if (op & 0x400)
+		ft_printf("%-*d %-*d", g->u_len, list->stat.st_uid, g->g_len, list->stat.st_gid);
+	else
+	{
+		!(op & 0x2000) ? ft_printf("%-*s ", g->u_len, list->uid) : 0;
+		!(op & 0x40) ? ft_printf("%-*s ", g->g_len, list->gid) : 0;
+	}
+	if (op & 0x2000 && op & 0x40)
+		ft_printf("  ");
 	list->type != DT_CHR ? ft_printf("%*u ", g->s_len, (unsigned long)list->stat.st_size)
 		: ft_printf("%*d, %*d ", g->maj_len,list->maj,g->min_len, list->min);
-	//printf("Dernier changement d’état :        %s", ctime(&list->stat.st_ctime));
-	//printf("Dernier accès au fichier :         %s", ctime(&list->stat.st_atime));
-	(op & 0x40) ? tab = ft_strsplit(ctime(&list->stat.st_ctime), ' ') : 0;
-	(op & 0x800) ? tab = ft_strsplit(ctime(&list->stat.st_atime), ' ') : 0;
-	!tab ?tab = ft_strsplit(ctime(&list->stat.st_mtime), ' '): 0;
-	//	int i = -1;
-//	while (tab[++i])
-//		ft_printf("{red}%s{reset}\n", tab[i]);
+	tab = ft_strsplit(ctime(&tme2), ' ');
 	ft_printf("%s %2s %*.*s ", tab[1], tab[2], !tme ? 0 : 5, !tme ? 5 : 4, !tme ? tab[3] : tab[4]);
 	ft_free_dblechar_tab(tab);
 }
