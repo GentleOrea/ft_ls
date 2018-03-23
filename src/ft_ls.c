@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 17:18:39 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/23 14:29:34 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/23 14:47:22 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	end_sort(t_global *g, t_ls *tmp, char *str, int op)
 	{
 		if ((g->b && (tmp->stat.st_mode & S_IFMT) == S_IFDIR) ||
 				((op & 2) && tmp->type == 4 && ft_strcmp(tmp->name, ".")
-				 && ft_strcmp(tmp->name, "..")))
+				&& ft_strcmp(tmp->name, "..")))
 		{
 			!tmp->path ? tmp->path = ft_strjoin(str, tmp->name) : 0;
 			!tmp->b ? ft_printf("\n") : 0;
@@ -49,8 +49,8 @@ void	sort_files(t_global *g, t_ls *begin, char *str, int op)
 	while (tmp && tmp->name)
 	{
 		if ((((((op & 0x8000) && ft_strcmp(tmp->name, ".")
-								&& ft_strcmp(tmp->name, "..")) || !(op & 0x8000)) && !g->b && !(!(op & 4) &&
-							tmp->name[0] == '.')) || (g->b && (tmp->stat.st_mode & S_IFMT) != S_IFDIR)))
+	&& ft_strcmp(tmp->name, "..")) || !(op & 0x8000)) && !g->b && !(!(op & 4) &&
+	tmp->name[0] == '.')) || (g->b && (tmp->stat.st_mode & S_IFMT) != S_IFDIR)))
 		{
 			(op & 1) ? print_stat(g, tmp, op) : 0;
 			ft_printf("%s", tmp->name);

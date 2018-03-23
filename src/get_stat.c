@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 09:48:05 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/23 14:29:35 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/23 14:47:03 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	print_id(t_global *g, t_ls *list, int op)
 	!(op & 0x2400) && list->uid ? ft_printf("%-*s ", g->u_len, list->uid) : 0;
 	!(op & 0x440) && list->gid ? ft_printf("%-*s ", g->g_len, list->gid) : 0;
 	(op & 0x2000 && op & 0x40) ? ft_printf("  ") : 0;
-
 }
 
 void	print_stat(t_global *g, t_ls *list, int op)
