@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 15:43:27 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/22 20:05:49 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/23 12:29:12 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		time_sort(t_ls *begin, t_ls *to_add, int op)
 {
 	if (op & 0x200 && !(op & 0x8))
-		return (to_add->stat.st_atime >= begin->stat.st_atime);
+		return (to_add->stat.st_atime > begin->stat.st_atime);
 	else if (op & 0x200)
 		return (to_add->stat.st_atime <= begin->stat.st_atime);
 	else if (op & 0x100 && !(op & 0x8))
@@ -33,7 +33,6 @@ int		time_sort(t_ls *begin, t_ls *to_add, int op)
 
 int		get_terms(t_ls *begin, t_ls *to_add, int op)
 {
-	//ft_printf("%d\n", op & 0x16);
 	if (op & 0x1000)
 		return (0);
 	else if (op & 0x80 && !(op & 0x8))
@@ -56,8 +55,7 @@ t_ls	*true_sort(t_ls *begin, t_ls *to_add, int op)
 	}
 	else if (!begin->next || get_terms(begin->next, to_add, op))
 	{
-		if (begin->next)
-			to_add->next = begin->next;
+		begin->next ? to_add->next = begin->next : 0;
 		begin->next = to_add;
 		return (NULL);
 	}
@@ -72,5 +70,3 @@ t_ls	*true_sort(t_ls *begin, t_ls *to_add, int op)
 	begin->next = to_add;
 	return (NULL);
 }
-
-

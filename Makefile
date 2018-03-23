@@ -6,23 +6,23 @@
 #    By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/11 11:17:30 by ygarrot           #+#    #+#              #
-#    Updated: 2018/03/22 15:43:20 by ygarrot          ###   ########.fr        #
+#    Updated: 2018/03/23 14:26:16 by ygarrot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls 
 
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address #-Weverything
+FLAGS = -Wall -Werror -Wextra -O3 -g3 #-fsanitize=address #-Weverything
 
 SRC_FOLDER = ./
 
 SRC_FP = ft_ls.c \
 		error.c \
 		parse_input.c \
-		debug.c \
 		get_stat.c \
 		special.c \
 		sort.c 
+
 #Colors
 _RED=\x1b[31m
 _GREEN=\x1b[32m

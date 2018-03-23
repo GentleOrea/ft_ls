@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 15:41:28 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/22 15:42:58 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/23 12:41:29 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	special_bit(mode_t st_mode, int decal, int row)
 void	convert_mode(mode_t st_mode, t_ls *list)
 {
 	char	s[12];
-	char attr[256];
+	char	attr[256];
+	acl_t	to_free;
 	int		i;
 	char	ac;
 
@@ -61,11 +62,11 @@ void	convert_mode(mode_t st_mode, t_ls *list)
 			s[10 - 1 - (i * 3)] = (st_mode & (1 << (i * 3))) ? 'x' : '-';
 	}
 	s[0] = if_forest(st_mode);
-	ac = acl_get_link_np(list->path, ACL_TYPE_EXTENDED) ? '+' : ' ';
-	ac = (listxattr(list->path, attr, 255, XATTR_NOFOLLOW | XATTR_SHOWCOMPRESSION) > 0 ? '@' : ac);
-	s[10] = ac;
+	to_free = acl_get_link_np(list->path, ACL_TYPE_EXTENDED);
+	s[10] = to_free ? '+' : ' ';
+	s[10] = (listxattr(list->path, attr, 255, XATTR_NOFOLLOW |
+				XATTR_SHOWCOMPRESSION) > 0 ? '@' : s[10]);
 	s[11] = '\0';
+	ft_memdel((void**)&to_free);
 	ft_printf("%s ", s);
 }
-
-
