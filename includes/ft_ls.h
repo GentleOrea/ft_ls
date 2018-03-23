@@ -6,7 +6,7 @@
 /*   By: ygarrot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:14:03 by ygarrot           #+#    #+#             */
-/*   Updated: 2018/03/23 14:33:49 by ygarrot          ###   ########.fr       */
+/*   Updated: 2018/03/23 14:43:47 by ygarrot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ t_ls			*path_is_valid(t_global *g, char *path, char *name, int op);
 void			convert_mode(mode_t st_mode, t_ls *list);
 void			end_sort(t_global *g, t_ls *tmp, char *str, int op);
 t_ls			*sort_files2(t_global *g, char *str, int op);
+void			sort_input(char **av, int op);
 #endif
