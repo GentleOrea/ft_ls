@@ -1,7 +1,5 @@
 # ft_ls
 
-# introduction
-
 La commande ls est une des toutes premières commandes que vous avez découvertes
 pendant vos premières heures de shell. 
 
@@ -16,7 +14,7 @@ comment intéragir avec le système de fichiers depuis un programme en C.
 Après tout, vous savez déja comment ouvrir, lire, écrire et fermer un fichier.
 Mais qu’en est-il des répertoires ? Des fichiers spéciaux ? Des droits, des dates ou de la taille des fichiers ?
 
-#Partie obligatoire
+# Partie obligatoire
 
 • Vous devez recoder la commande ls du système.
 
