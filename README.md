@@ -1,6 +1,6 @@
 # ft_ls
 
-#introduction
+# introduction
 
 La commande ls est une des toutes premières commandes que vous avez découvertes
 pendant vos premières heures de shell. 
